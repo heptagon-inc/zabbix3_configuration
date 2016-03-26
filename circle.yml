@@ -5,7 +5,7 @@ machine:
     VAGRANT_VERSION: 1.8.1
     VAGRANT_DEFAULT_PROVIDER: aws
   ruby:
-    2.2.4
+    version: 2.2.4
 
 dependencies:
   pre:
