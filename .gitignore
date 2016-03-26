@@ -1,0 +1,8 @@
+*.gem
+Gemfile.lock
+private/
+vendor/
+*.swp
+tmp/
+.env*
+.vagrant/

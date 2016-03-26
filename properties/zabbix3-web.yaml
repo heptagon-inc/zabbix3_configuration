@@ -1,0 +1,12 @@
+role: 'zabbix3-web'
+os:
+  #packages: 
+  sshd:
+    port: 22
+    permitrootlogin: 'no'
+    passwordauth: 'no'
+zabbix:
+  agent:
+    server: 
+      - '127.0.0.1'
+    allow_root: 0
