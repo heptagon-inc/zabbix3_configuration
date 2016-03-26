@@ -1,0 +1,31 @@
+machine:
+  timezone: Asia/Tokyo
+  environment:
+    AWS_DEFAULT_REGION: ap-northeast-1
+    VAGRANT_VERSION: 1.8.1
+    VAGRANT_DEFAULT_PROVIDER: aws
+  ruby:
+    2.2.4
+
+dependencies:
+  pre:
+    - |
+      wget https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+      sudo dpkg --install vagrant_${VAGRANT_VERSION}_x86_64.deb
+      vagrant plugin install vagrant-aws
+      vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+
+test:
+  override:
+    - |
+      vagrant up
+  post:
+    - |
+      vagrant destroy -f
+
+#deployment:
+#  production:
+#    branch: release
+#    commands:
+#      - |
+#        itamae ssh
