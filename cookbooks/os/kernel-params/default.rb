@@ -1,4 +1,4 @@
-template '/etc/sysctl.d/10-custom.conf'
+template '/etc/sysctl.d/10-custom.conf' unless check_lxc
 
 execute 'sysctl -e -p' do
   subscribes :run, "template[/etc/sysctl.d/10-custom.conf]"
