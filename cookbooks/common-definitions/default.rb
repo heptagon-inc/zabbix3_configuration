@@ -42,8 +42,9 @@ define :disable_daemon do
   end
 end
 
-define :check_lxc do
-  lxc = system("cat /proc/self/cgroup |grep -qw 'lxc' | echo $?")
-  return true if lxc == 0
+define :check_container do
+  name = params[:name]
+  container = system("cat /proc/self/cgroup |grep -qw '#{name}' | echo $?")
+  return true if container == 0
   return false
 end
