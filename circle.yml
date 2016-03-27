@@ -2,28 +2,28 @@ machine:
   timezone: Asia/Tokyo
   environment:
     AWS_DEFAULT_REGION: ap-northeast-1
-    VAGRANT_VERSION: 1.8.1
-    VAGRANT_DEFAULT_PROVIDER: aws
+    #VAGRANT_VERSION: 1.8.1
+    #VAGRANT_DEFAULT_PROVIDER: aws
   ruby:
     version: 2.2.3
 
-dependencies:
-  pre:
-    - |
-      wget https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
-      sudo dpkg --install vagrant_${VAGRANT_VERSION}_x86_64.deb
-      vagrant plugin install vagrant-aws
-      vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+#dependencies:
+#  pre:
+#    - |
+#      wget https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+#      sudo dpkg --install vagrant_${VAGRANT_VERSION}_x86_64.deb
+#      vagrant plugin install vagrant-aws
+#      vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
 
 test:
   override:
     - |
       bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb --dry-run
-      vagrant up
-      bundle exec itamae ssh --vagrant -y properties/zabbix3-web.yaml bootstrap.rb
-  post:
-    - |
-      vagrant destroy -f
+      #vagrant up
+      #bundle exec itamae ssh --vagrant -y properties/zabbix3-web.yaml bootstrap.rb
+  #post:
+  #  - |
+  #    vagrant destroy -f
 
 deployment:
   production:
