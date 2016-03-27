@@ -11,4 +11,9 @@ template '/var/lib/zabbix/.my.cnf' do
   group 'zabbix'
   mode '0640'
   notifies :restart, "service[zabbix-agent]"
+  variables(
+    variable_mysql_user_name: secret["mysql_user_name"],
+    variable_mysql_user_pass: secret["mysql_user_pass"],
+    variable_mysql_host: secret["mysql_host"]
+  )
 end
