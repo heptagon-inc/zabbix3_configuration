@@ -30,9 +30,9 @@ Vagrant.configure(2) do |config|
     override.ssh.private_key_path = ENV['AWS_KEYPAIR_PATH']
   end
 
-  config.vm.provision :itamae do |itamae|
-    itamae.sudo = true
-    itamae.recipes = ['./bootstrap.rb']
-    itamae.yaml = './properties/zabbix3-web.yaml'
-  end
+  #config.vm.provision :itamae do |itamae|
+  #  itamae.sudo = true
+  #  itamae.recipes = ['./bootstrap.rb']
+  #  itamae.yaml = './properties/zabbix3-web.yaml'
+  #end
 end

@@ -41,10 +41,3 @@ define :disable_daemon do
     action [:stop, :disable]
   end
 end
-
-define :check_container do
-  name = params[:name]
-  container = system("cat /proc/self/cgroup |grep -qw '#{name}' | echo $?")
-  return true if container == 0
-  return false
-end
