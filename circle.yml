@@ -5,15 +5,26 @@ machine:
     VAGRANT_VERSION: 1.8.1
     VAGRANT_DEFAULT_PROVIDER: aws
   ruby:
-    version: 2.2.4
+    version: 2.2.3
 
 dependencies:
+  cache_directories:
+    - |
+      vagrant
+      ~/.vagrant.d
   pre:
     - |
-      wget https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
-      sudo dpkg --install vagrant_${VAGRANT_VERSION}_x86_64.deb
-      vagrant plugin install vagrant-aws vagrant-itamae
-      vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+      if [ ! -e vagrant ]; then
+        git clone git@github.com:mitchellh/vagrant.git
+        cd vagrant
+        git checkout refs/tags/v${VAGRANT_VERSION}
+        bundle install
+        rake install
+      fi
+      if [ ! -e ~/.vagrant.d ]; then
+        vagrant plugin install vagrant-aws vagrant-itamae
+        vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+      fi
 
 test:
   override:
@@ -23,9 +34,9 @@ test:
     - |
       vagrant destroy -f
 
-#deployment:
-#  production:
-#    branch: release
-#    commands:
-#      - |
-#        itamae ssh
+deployment:
+  production:
+    branch: release
+    commands:
+      - |
+        bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb
