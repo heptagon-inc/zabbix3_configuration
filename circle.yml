@@ -30,3 +30,9 @@ deployment:
     commands:
       - |
         bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb
+
+general:
+  branches:
+    ignore:
+      - |
+        release
