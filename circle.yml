@@ -22,7 +22,7 @@ test:
   override:
     - |
       docker build -t local/amzn .
-      docker run -it --privileged -w /home/ubuntu/zabbix3_configuration -v /home/ubuntu/zabbix3_configuration:/home/ubuntu/zabbix3_configuration:rw local/amzn bash -c "bundle && bundle exec itamae local -y properties/zabbix3-web.yaml bootstrap.rb"
+      docker run -it --privileged -w /home/ubuntu/zabbix3_configuration -v /home/ubuntu/zabbix3_configuration:/home/ubuntu/zabbix3_configuration:rw -e ITAMAE_SECRET_PASS=${ITAMAE_SECRET_PASS} local/amzn bash -c "bundle && bundle exec itamae local -y properties/zabbix3-web.yaml bootstrap.rb"
       #bundle exec itamae docker --image=youyo/amzn:2016.03 --node-yaml=properties/zabbix3-web.yaml bootstrap.rb
       #bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb --dry-run && vagrant up
       #post:
