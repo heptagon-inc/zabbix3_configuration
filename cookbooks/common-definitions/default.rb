@@ -43,7 +43,7 @@ define :disable_daemon do
 end
 
 define :check_lxc do
-  lxc = `cat /proc/self/cgroup |grep -qw 'lxc' | echo $?`
+  lxc = system("cat /proc/self/cgroup |grep -qw 'lxc' | echo $?")
   return true if lxc == 0
   return false
 end
