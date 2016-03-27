@@ -6,26 +6,25 @@ machine:
     VAGRANT_DEFAULT_PROVIDER: aws
   ruby:
     version: 2.2.4
-  services:
-    - docker
+  #services:
+  #  - docker
 
-#dependencies:
-#  pre:
-#    - |
-      #wget https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
-      #sudo dpkg --install vagrant_${VAGRANT_VERSION}_x86_64.deb
-      #vagrant plugin install vagrant-aws vagrant-itamae
-      #vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+dependencies:
+  pre:
+    - |
+      wget https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+      sudo dpkg --install vagrant_${VAGRANT_VERSION}_x86_64.deb
+      vagrant plugin install vagrant-aws vagrant-itamae
+      vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
 
 test:
   override:
     - |
-      bundle exec itamae docker --image=youyo/amzn:2016.03 --node-yaml=properties/zabbix3-web.yaml bootstrap.rb
-      #bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb --dry-run
-      #vagrant up
-      #post:
-      #- |
-      #vagrant destroy -f
+      #bundle exec itamae docker --image=youyo/amzn:2016.03 --node-yaml=properties/zabbix3-web.yaml bootstrap.rb
+      bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb --dry-run && vagrant up
+  post:
+    - |
+      vagrant destroy -f
 
 deployment:
   production:
@@ -33,9 +32,3 @@ deployment:
     commands:
       - |
         bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb
-
-general:
-  branches:
-    ignore:
-      - |
-        release
