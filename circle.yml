@@ -6,6 +6,9 @@ machine:
     VAGRANT_DEFAULT_PROVIDER: aws
   ruby:
     version: 2.2.4
+  services:
+    - |
+      docker
 
 #dependencies:
 #  pre:
