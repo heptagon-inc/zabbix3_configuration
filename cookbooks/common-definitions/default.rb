@@ -2,12 +2,16 @@ package 'yum-utils'
 
 define :enable_repo do
   repo_name = params[:name]
-  execute "yum-config-manager --enable #{repo_name}"
+  execute "yum-config-manager --enable #{repo_name}" do
+    only_if "yum-config-manager --showduplicates -q #{repo_name} | grep -qw 'enabled = False'"
+  end
 end
 
 define :disable_repo do
   repo_name = params[:name]
-  execute "yum-config-manager --disable #{repo_name}"
+  execute "yum-config-manager --disable #{repo_name}" do
+    only_if "yum-config-manager --showduplicates -q #{repo_name} | grep -qw 'enabled = True'"
+  end
 end
 
 define :rpm_package_from_url, repo: nil do

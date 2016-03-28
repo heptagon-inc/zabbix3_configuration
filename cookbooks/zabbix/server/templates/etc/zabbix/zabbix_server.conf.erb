@@ -1,0 +1,78 @@
+############ GENERAL PARAMETERS #################
+ListenPort=10051
+# SourceIP=
+# LogType=file
+LogFile=/var/log/zabbix/zabbix_server.log
+LogFileSize=10
+# DebugLevel=3
+PidFile=/var/run/zabbix/zabbix_server.pid
+DBHost=<%= @zabbix_server_db_host %>
+DBName=<%= @zabbix_server_db_database %>
+DBUser=<%= @zabbix_server_db_user %>
+DBPassword=<%= @zabbix_server_db_password %>
+DBPort=<%= @zabbix_server_db_port %>
+# DBSchema=
+# DBSocket=/tmp/mysql.sock
+
+############ ADVANCED PARAMETERS ################
+StartPollers=<%= node[:zabbix][:server][:process][:StartPollers] %>
+StartIPMIPollers=<%= node[:zabbix][:server][:process][:StartIPMIPollers] %>
+StartPollersUnreachable=<%= node[:zabbix][:server][:process][:StartPollersUnreachable] %>
+StartTrappers=<%= node[:zabbix][:server][:process][:StartTrappers] %>
+StartPingers=<%= node[:zabbix][:server][:process][:StartPingers] %>
+StartDiscoverers=<%= node[:zabbix][:server][:process][:StartDiscoverers] %>
+StartHTTPPollers=<%= node[:zabbix][:server][:process][:StartHTTPPollers] %>
+StartTimers=<%= node[:zabbix][:server][:process][:StartTimers] %>
+StartEscalators=<%= node[:zabbix][:server][:process][:StartEscalators] %>
+StartProxyPollers=<%= node[:zabbix][:server][:process][:StartProxyPollers] %>
+ProxyConfigFrequency=<%= node[:zabbix][:server][:process][:ProxyConfigFrequency] %>
+ProxyDataFrequency=<%= node[:zabbix][:server][:process][:ProxyDataFrequency] %>
+# JavaGateway=
+# JavaGatewayPort=10052
+# StartJavaPollers=0
+# StartVMwareCollectors=0
+# VMwareFrequency=60
+# VMwarePerfFrequency=60
+# VMwareCacheSize=8M
+# VMwareTimeout=10
+SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
+# StartSNMPTrapper=0
+ListenIP=0.0.0.0
+HousekeepingFrequency=<%= node[:zabbix][:server][:cache][:HousekeepingFrequency] %>
+MaxHousekeeperDelete=<%= node[:zabbix][:server][:cache][:MaxHousekeeperDelete] %>
+SenderFrequency=<%= node[:zabbix][:server][:cache][:SenderFrequency] %>
+CacheSize=<%= node[:zabbix][:server][:cache][:CacheSize] %>
+CacheUpdateFrequency=<%= node[:zabbix][:server][:cache][:CacheUpdateFrequency] %>
+StartDBSyncers=<%= node[:zabbix][:server][:cache][:StartDBSyncers] %>
+HistoryCacheSize=<%= node[:zabbix][:server][:cache][:HistoryCacheSize] %>
+HistoryIndexCacheSize=<%= node[:zabbix][:server][:cache][:HistoryIndexCacheSize] %>
+TrendCacheSize=<%= node[:zabbix][:server][:cache][:TrendCacheSize] %>
+ValueCacheSize=<%= node[:zabbix][:server][:cache][:ValueCacheSize] %>
+Timeout=<%= node[:zabbix][:server][:Timeout] %>
+# TrapperTimeout=300
+UnreachablePeriod=<%= node[:zabbix][:server][:UnreachablePeriod] %>
+# UnavailableDelay=60
+# UnreachableDelay=15
+AlertScriptsPath=/usr/lib/zabbix/alertscripts
+ExternalScripts=/usr/lib/zabbix/externalscripts
+# FpingLocation=/usr/sbin/fping
+# Fping6Location=/usr/sbin/fping6
+# SSHKeyLocation=
+LogSlowQueries=<%= node[:zabbix][:server][:LogSlowQueries] %>
+TmpDir=/dev/shm
+AllowRoot=<%= node[:zabbix][:server][:allow_root] %>
+User=zabbix
+# Include=
+# SSLCertLocation=${datadir}/zabbix/ssl/certs
+# SSLKeyLocation=${datadir}/zabbix/ssl/keys
+# SSLCALocation=
+
+####### LOADABLE MODULES #######
+# LoadModulePath=${libdir}/modules
+# LoadModule=
+
+####### TLS-RELATED PARAMETERS #######
+# TLSCAFile=
+# TLSCRLFile=
+# TLSCertFile=
+# TLSKeyFile=
