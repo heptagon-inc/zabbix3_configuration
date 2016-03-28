@@ -13,5 +13,5 @@ service 'sshd' do
 end
 
 template '/etc/ssh/sshd_config' do
-  notifies :restart, "service[sshd]", :immediately
+  notifies :restart, "service[sshd]"
 end
