@@ -21,7 +21,6 @@ node.reverse_merge!({
 
 node[:php][:php][:packages].each do |pkg|
   package pkg do
-    options "--enablerepo=remi,remi-php55"
     action :install
   end
 end
