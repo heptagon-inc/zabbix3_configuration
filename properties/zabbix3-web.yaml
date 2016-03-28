@@ -12,14 +12,24 @@ zabbix:
     allow_root: 0
 php:
   php:
-    packages: [
-      'php56','php56-fpm','php56-gd','php56-bcmath','php56-mbstring','php56-mcrypt','php56-mysqlnd','php56-pdo','php-pear','php56-xml','php56-xmlrpc','php56-opcache'
-    ],
-    user: 'nginx',
+    packages: 
+      - 'php56'
+      - 'php56-fpm'
+      - 'php56-gd'
+      - 'php56-bcmath'
+      - 'php56-mbstring'
+      - 'php56-mcrypt'
+      - 'php56-mysqlnd'
+      - 'php56-pdo'
+      - 'php-pear'
+      - 'php56-xml'
+      - 'php56-xmlrpc'
+      - 'php56-opcache'
+    user: 'nginx'
     fpm:
-      status: true,
-      listen: '127.0.0.1:9000',
-      pm_max_children: 16,
-      pm_start_servers: 4,
-      pm_min_spare_servers: 4,
+      status: true
+      listen: '127.0.0.1:9000'
+      pm_max_children: 16
+      pm_start_servers: 4
+      pm_min_spare_servers: 4
       pm_max_spare_servers: 8

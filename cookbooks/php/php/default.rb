@@ -29,12 +29,16 @@ execute "sed -i \"s|.*date.timezone =|date.timezone = Asia/Tokyo|g\" /etc/php.in
   not_if "grep -q -w \"^date.timezone = Asia/Tokyo\" /etc/php.ini"
 end
 
-execute "chown -R #{node[:php][:php][:user]}: /var/lib/php/session/"
+execute "chown -R #{node[:php][:php][:user]}: /var/lib/php/5.6/session/"
 
 if node[:php][:php][:fpm][:status]
   %w(/etc/php-fpm.conf /etc/php-fpm.d/www.conf).each do |f|
     template f do
-      notifies :restart, "service[php-fpm]"
+      notifies :restart, "service[php-fpm-5.6]"
     end
+  end
+
+  service 'php-fpm-5.6' do
+    action [:start, :enable]
   end
 end
