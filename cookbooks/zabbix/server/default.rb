@@ -52,6 +52,8 @@ template '/etc/zabbix/zabbix_server.conf' do
   )
 end
 
+# 初期テーブル作成をどうしようか...
+
 service 'zabbix-server' do
   action [:start, :enable]
 end
