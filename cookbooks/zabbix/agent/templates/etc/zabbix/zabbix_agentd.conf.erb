@@ -27,6 +27,7 @@ RefreshActiveChecks=60
 ############# ADVANCED PARAMETERS #################
 Timeout=30
 AllowRoot=<%= node[:zabbix][:agent][:allow_root] %>
+User=zabbix
 Include=/etc/zabbix/zabbix_agentd.d/
 
 ######## USER-DEFINED MONITORED PARAMETERS #######
@@ -35,6 +36,19 @@ Include=/etc/zabbix/zabbix_agentd.d/
 ######### LOADABLE MODULES #######
 # LoadModulePath=${libdir}/modules
 # LoadModule=
+
+####### TLS-RELATED PARAMETERS #######
+TLSConnect=unencrypted
+TLSAccept=unencrypted
+# TLSCAFile=
+# TLSCRLFile=
+# TLSServerCertIssuer=
+# TLSServerCertSubject=
+# TLSCertFile=
+# TLSKeyFile=
+# TLSPSKIdentity=
+# TLSPSKFile=
+
 UserParameter=postfix.queuen,mailq | grep "^[0-9A-F]" | wc -l
 UserParameter=redis.status[*],redis-cli info | grep -w "$1" | awk -F':' '{print $$2}'
 UserParameter=redis.ping,redis-cli ping 2>/dev/null | grep -w 'PONG' | wc -l
