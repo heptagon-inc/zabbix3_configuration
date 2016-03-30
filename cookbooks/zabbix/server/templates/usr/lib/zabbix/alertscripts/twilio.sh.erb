@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ACCOUNT_SID='<%= @twilio_sid %>'
+AUTH_TOKEN='<%= @twilio_token %>'
+BASE_URL="https://api.twilio.com/2010-04-01/Accounts/${ACCOUNT_SID}/Calls.xml"
+FROM='<%= @twilio_from %>'
+TO='<%= @twilio_to %>'
+TWIML='https://zbx.heptagon.co.jp/call.xml'
+TIMEOUT='10'
+for number in ${TO}
+do
+	date >> /tmp/twilio.log 2>&1
+	curl -X POST ${BASE_URL} \
+		-d "From=${FROM}" \
+		-d "To=${number}" \
+		-d "Url=${TWIML}" \
+		-d "Method=GET" \
+		-d "Timeout=${TIMEOUT}" \
+		-u ${ACCOUNT_SID}:${AUTH_TOKEN} >> /tmp/twilio.log 2>&1
+	echo "" >> /tmp/twilio.log
+done

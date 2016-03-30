@@ -1,0 +1,32 @@
+#
+server {
+	listen          80 default_server;
+	server_name     zbx.heptagon.co.jp zabbix3.heptagon.co.jp;
+	client_max_body_size 20M;
+	root /var/www/html;
+
+	location ~ /zabbix/(styles|images|fonts|js)/ {
+		gzip_static always;
+		gunzip on;
+		expires 72h;
+		add_header Cache-Control "public";
+	}
+
+	location / {
+		index index.php;
+	}
+
+	location ~ \.php$ {
+		fastcgi_pass   127.0.0.1:9000;
+		fastcgi_index  index.php;
+		fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+		fastcgi_buffer_size		4k;
+		fastcgi_buffers			64 4k;
+		fastcgi_busy_buffers_size	128k;
+		include        fastcgi_params;
+	}
+
+	location ~ /\.ht {
+		deny  all;
+	}
+}

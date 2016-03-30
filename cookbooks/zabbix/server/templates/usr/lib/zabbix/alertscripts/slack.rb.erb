@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+require 'slack-notifier'
+
+URL = '<%= @slack_webhook %>'
+SUBJECT = ARGV[1]
+BODY    = ARGV[2]
+
+class SlackNotify
+	def initialize url: string
+		@notifier = Slack::Notifier.new url
+	end
+
+	def which_color str: string
+		str.match(/Alert Notification \[(\w*)\]/) do |md|
+			@level = md[1]
+		end
+
+		case @level
+		when 'Disaster'
+			return 'danger'
+		when 'High'
+			return 'warning'
+		when 'Warning'
+			return 'good'
+		else
+			return '#439FE0'
+		end
+	end
+
+	def post_slack subject: sbj, body: string
+		color = which_color str: subject
+		attachments = {
+			fallback: 'Zabbix-Alert.',
+			pretext: 'Zabbix-Alert.',
+			title: subject,
+			color: color,
+			fields: [
+				{
+					value: body,
+					short: true
+				}
+			]
+		}
+		@notifier.ping nil, attachments: [attachments]
+	end
+end
+
+notify = SlackNotify.new url: URL
+notify.post_slack subject: SUBJECT, body: BODY
