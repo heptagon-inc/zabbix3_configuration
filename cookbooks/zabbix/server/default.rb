@@ -37,7 +37,7 @@ node.reverse_merge!({
 
 require_relative '../../../itamae_helper.rb'
 
-%w(zabbix-server zabbix-server-mysql zabbix-web zabbix-web-mysql zabbix-web-japanese).each {|pkg| package pkg}
+%w(zabbix-server-mysql zabbix-web-mysql zabbix-web-japanese).each {|pkg| package pkg}
 
 template '/etc/zabbix/zabbix_server.conf' do
   owner 'root'
@@ -53,6 +53,29 @@ template '/etc/zabbix/zabbix_server.conf' do
 end
 
 # 初期テーブル作成をどうしようか...
+
+%w(/usr/lib/zabbix/alertscripts/twilio.sh /usr/lib/zabbix/alertscripts/slack.rb /usr/lib/zabbix/alertscripts/chatwork.sh).each do |file|
+  template file do
+    owner 'zabbix'
+    group 'zabbix'
+    mode '0750'
+    variables(
+      chatwork_apikey: secret["chatwork_apikey"],
+      chatwork_roomid: secret["chatwork_roomid"],
+      twilio_sid: secret["twilio_sid"],
+      twilio_token: secret["twilio_token"],
+      twilio_from: secret["twilio_from"],
+      twilio_to: secret["twilio_to"],
+      slack_webhook: secret["slack_webhook"]
+    )
+  end
+end
+
+template '/var/www/html/call.xml' do
+  owner 'nginx'
+  group 'nginx'
+  mode '0644'
+end
 
 service 'zabbix-server' do
   action [:start, :enable]

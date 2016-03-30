@@ -18,7 +18,7 @@ machine:
 test:
   override:
     - |
-      bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb --dry-run
+      bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zabbix3.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb --dry-run
       #vagrant up
       #bundle exec itamae ssh --vagrant -y properties/zabbix3-web.yaml bootstrap.rb
   #post:
@@ -30,4 +30,4 @@ deployment:
     branch: release
     commands:
       - |
-        bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zbx.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb
+        bundle exec itamae ssh -u ec2-user -i ${AWS_KEYPAIR_PATH} -p 22 -h zabbix3.heptagon.co.jp -y properties/zabbix3-web.yaml bootstrap.rb

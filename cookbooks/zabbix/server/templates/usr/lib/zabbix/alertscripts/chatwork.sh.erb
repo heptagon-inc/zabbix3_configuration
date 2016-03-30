@@ -1,0 +1,18 @@
+#!/bin/bash
+export PATH=${PATH}
+
+API_KEY='<%= @chatwork_apikey %>'
+ROOM_IDS='<%= @chatwork_roomid %>'
+SUBJECT=${2}
+BODY=${3}
+MESSAGE="【アラートメール】
+${SUBJECT}
+${BODY}
+"
+
+for room_id in ${ROOM_IDS}
+do
+	curl -X POST -H "X-ChatWorkToken: ${API_KEY}" \
+		-d "body=${MESSAGE}" \
+		"https://api.chatwork.com/v1/rooms/${room_id}/messages"
+done
