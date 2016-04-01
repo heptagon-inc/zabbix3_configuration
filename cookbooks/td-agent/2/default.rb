@@ -21,5 +21,6 @@ template "/etc/td-agent/td-agent.conf" do
 end
 
 service 'td-agent' do
-  action [:start, :enable]
+  #action [:start, :enable]
+  action [:stop, :disable]
 end
