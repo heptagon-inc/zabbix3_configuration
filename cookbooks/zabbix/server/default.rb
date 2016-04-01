@@ -56,7 +56,7 @@ end
 
 %w(/usr/lib/zabbix/alertscripts/twilio.sh /usr/lib/zabbix/alertscripts/slack.rb
   /usr/lib/zabbix/alertscripts/chatwork.sh /usr/lib/zabbix/externalscripts/check_ssl.rb
-  /usr/lib/zabbix/externalscripts/cw_rds_mysql.sh).each do |file|
+  /usr/lib/zabbix/externalscripts/cw_rds_mysql.sh /usr/lib/zabbix/externalscripts/cw_ec2.sh).each do |file|
   template file do
     owner 'zabbix'
     group 'zabbix'
