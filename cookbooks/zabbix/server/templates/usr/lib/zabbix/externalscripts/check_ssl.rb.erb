@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+require 'uri'
+require 'net/https'
+
+url = ARGV[0]
+
+module Ssl
+  class Check
+    attr_accessor :hostname
+
+    def initialize url:
+      if md = url.match(/https:\/\/(.*)\//)
+        @hostname = md[1]
+      elsif md = url.match(/https:\/\/(.*)/)
+        @hostname = md[1]
+      else
+       raise "#{url} is wrong format."
+      end
+	end
+
+	def get_terminate_time url:
+      session = Net::HTTP.new(url, 443)
+      session.use_ssl = true
+      session.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      cert = session.start do
+        session.peer_cert
+      end
+      return cert.not_after
+	end
+
+	def convert_day time:
+      return ((time - Time.now) / (60 * 60 * 24)).to_i
+    end
+
+  end
+end
+
+c = Ssl::Check.new url: url
+time = c.get_terminate_time url: c.hostname
+puts c.convert_day time: time
