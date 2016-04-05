@@ -56,4 +56,5 @@ UserParameter=mysql.replication_io,test `HOME=/var/lib/zabbix mysql -e 'show sla
 UserParameter=mysql.replication_sql,test `HOME=/var/lib/zabbix mysql -e 'show slave status\G'|grep 'Slave_SQL_Running:'|awk '{print $2}'` = 'Yes' && echo 1 || echo 0
 UserParameter=mysql.replication_seconds,HOME=/var/lib/zabbix mysql -e 'show slave status\G'|grep 'Seconds_Behind_Master:'|awk '{print $2}'
 UserParameter=kvm.info[*],/etc/zabbix/bin/infokvm.sh $1
-UserParameter=netstat.count[*],netstat -ant | grep -w $1 | wc -l
+UserParameter=netstat.export,netstat -ant | awk '{print $$6}' > /tmp/netstat.count.txt && echo 1
+UserParameter=netstat.count[*],cat /tmp/netstat.count.txt | grep -w $1 | wc -l
